@@ -1,14 +1,45 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-const hasError = ref(false)
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+
+interface AnimalFacts {
+  text: string
+}
+
+const catFacts = ref([] as AnimalFacts[])
+const fetchingFacts = ref(false)
+async function loadMoreFacts() {
+  fetchingFacts.value = true
+  const catFactsResponse = await axios.get<AnimalFacts[]>(
+    'https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=5',
+  )
+  catFacts.value.push(...(catFactsResponse.data || []))
+
+  fetchingFacts.value = false
+}
+
+async function fetchInitialCatFacts() {
+  const catFactsResponse = await axios.get<AnimalFacts[]>(
+    'https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=5',
+  )
+  catFacts.value = catFactsResponse.data
+}
+
+onMounted(async () => {
+  await fetchInitialCatFacts();
+})
 </script>
+
 <template>
-  <h1>DataLedge.</h1>
+  <ul>
+    <li v-for="(fact, index) in catFacts" :key="index">{{ index + 1 }} {{ fact.text }}</li>
+  </ul>
+  <button name="login" v-on:click="loadMoreFacts">{{ fetchingFacts ? '...' : 'Load More' }}</button>
 </template>
 
 <style>
 body {
-  background-color: rgb(17, 16, 16);
+  background: black;
 }
 </style>
 
@@ -18,6 +49,10 @@ h1 {
   color: white;
 }
 
+li {
+  color: white;
+  padding: 0.5em 1em;
+}
 .static {
   color: blue;
 }
