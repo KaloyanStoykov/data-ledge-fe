@@ -1,29 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-const hasError = ref(false)
+import { onMounted } from 'vue'
+
+// When application renders, check for darkmode
+onMounted(() => {
+  const darkMode: string | null = localStorage.getItem('dark-mode')
+  if (darkMode !== null) {
+    document.documentElement.classList.toggle('my-app-dark')
+  }
+})
 </script>
 <template>
-  <h1>DataLedge.</h1>
+  <main>
+    <RouterView />
+  </main>
 </template>
-
-<style>
-body {
-  background-color: rgb(17, 16, 16);
-}
-</style>
-
-<style scoped>
-h1 {
-  font-weight: bold;
-  color: white;
-}
-
-.static {
-  color: blue;
-}
-
-p {
-  line-height: 1.6;
-  margin-top: 1em;
-}
-</style>

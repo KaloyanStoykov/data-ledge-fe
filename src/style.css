@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+@import "tailwindcss-primeui";
+@import "flowbite/src/themes/default.css";
+@plugin "flowbite/plugin";
+@custom-variant dark (&:where(.my-app-dark, .my-app-dark *));
+
+* {
+   font-family: Roboto, sans-serif, Arial;
+   font-style: normal;
+}
+
+.my-app-dark {
+  background: #0d0d0d;
+}
+
