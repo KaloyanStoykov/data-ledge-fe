@@ -16,7 +16,7 @@
         icon="pi pi-plus"
         label="Create"
         variant="primary"
-        @click="openDialog = true"
+        @click="handleCreate"
       ></Button>
     </div>
 
@@ -94,7 +94,7 @@
         <Column field="url" header="Url"></Column>
         <Column class="w-10 text-red-300">
           <template #body="{ data }">
-            <Button icon="pi pi-search" variant="outlined" severity="secondary" size="sm" @click="editSources(data)" />
+            <Button icon="pi pi-search" variant="outlined" severity="secondary" size="sm" @click="handleEdit(data)" />
           </template>
         </Column>
       </DataTable>
@@ -129,6 +129,7 @@ onMounted(async () => {
   const dataTypesResult = await axios.get('http://localhost:8080/datasource-types')
 
   items.value = result.data.items
+  console.log(items.value)
   dataTypes.value = dataTypesResult.data.dataTypes
   isLoadingDataSources.value = false
 })
@@ -144,21 +145,38 @@ const dataTypes = ref([] as DataType[])
 const text1 = ref('')
 const createSources = ref(true)
 
-const editSources = (data: CreateDataSource) => {
+
+const handleEdit = (data: CreateDataSource) => {
+  console.log(data.type?.id);
+  createSources.value = false
   openDialog.value = true
-  initialValues = data;
-  selectedType.value = data.typeId;
-};
+  selectedType.value = 1
+  initialValues.value = { ...data }
+}
 
+const handleCreate = () => {
+  createSources.value = true
+  openDialog.value = true
+  selectedType.value = 0
+  initialValues.value = {
+    name: '',
+    typeId: 0,
+    description: '',
+    url: '',
+    created: new Date().toISOString(),
+    updated: new Date().toISOString(),
+  }
+}
 
-let initialValues: CreateDataSource = {
+const initialValues = ref<CreateDataSource>({
   name: '',
   typeId: 0,
   description: '',
   url: '',
   created: new Date().toISOString(),
   updated: new Date().toISOString(),
-}
+})
+
 
 const resolver = (e: FormResolverOptions) => {
   const values = e.values as CreateDataSource

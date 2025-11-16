@@ -162,6 +162,16 @@ const MyPreset = definePreset(Nora, {
       root: {
         borderRadius: '0.5em'
       }
+    },
+    card: {
+      colorScheme: {
+        light: {
+          background: 'red'
+        },
+        dark: {
+          background: '{primary.500}'
+        }
+      }
     }
 
   }

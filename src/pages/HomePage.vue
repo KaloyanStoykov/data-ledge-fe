@@ -2,6 +2,7 @@
 import 'primeicons/primeicons.css';
 import { Menubar } from 'primevue'
 import Button from 'primevue/button';
+import Card from 'primevue/card';
 import { ref } from 'vue'
 
 
@@ -25,12 +26,6 @@ const items = ref([
     hasSubmenu: false,
   }
 ])
-
-// const toggleDarkMode = (): void => {
-//   document.documentElement.classList.toggle('my-app-dark');
-// }
-//
-// const checked = ref(false);
 
 const menuStyle = ref({
   colorScheme: {
@@ -85,10 +80,51 @@ const menuStyle = ref({
     </div>
   </div>
 
-  <section class="h-screen w-full flex items-center justify-center text-6xl">
-    <h3 class="bg-gradient-to-r from-blue-600 via-blue-400 to-pink-300 inline-block text-transparent bg-clip-text">Why choose us?</h3>
-    <div class="w-md h-80 bg-gradient-to-r from-blue-950 via-blue-700 to-purple-700">
+  <section class="h-screen w-full flex flex-col items-center justify-center text-6xl relative p-4">
 
+    <div class="flex flex-row wrap gap-2 justify-center w-full md:w-11/12">
+      <Card style="width: 33.3%; padding: 1rem; background: none;">
+        <template #header>
+          <i class="pi pi-database p-5" style="font-size: 2rem;"></i>
+        </template>
+
+        <template #title>Advanced Card</template>
+        <template #content>
+          <p class="m-0 text-lg mt-4">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
+            quas!
+          </p>
+        </template>
+
+      </Card>
+
+      <Card style="width: 33.3%; padding: 1rem; background: none; border-left: 1px solid;">
+        <template #header>
+          <i class="pi pi-database p-5" style="font-size: 2rem;"></i>
+        </template>
+
+        <template #title>Advanced Card</template>
+        <template #content>
+          <p class="m-0 text-lg mt-4">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
+            quas!
+          </p>
+        </template>
+      </Card>
+
+      <Card style="width: 33.3%; padding: 1rem; background: none;">
+        <template #header>
+          <i class="pi pi-database p-5" style="font-size: 2rem;"></i>
+        </template>
+
+        <template #title>Advanced Card</template>
+        <template #content>
+          <p class="m-0 text-lg mt-4">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
+            quas!
+          </p>
+        </template>
+      </Card>
     </div>
   </section>
 

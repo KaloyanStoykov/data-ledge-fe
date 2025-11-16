@@ -4,12 +4,16 @@ export interface DataType {
   description: string
 }
 
-
 export interface CreateDataSource {
   id?: number
   name: string
   typeId: number
   description: string
+  type?: {
+    id: number
+    name: string
+    description: string
+  }
   url: string
   created: string
   updated: string
