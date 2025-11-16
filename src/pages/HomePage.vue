@@ -54,7 +54,7 @@ const menuStyle = ref({
 
       <template #item="{ item, props, hasSubmenu, root }">
         <a class="items-center" v-bind="props.action">
-          <span class="text-xl">{{ item.label }}</span>
+          <span class="text-xl text-white">{{ item.label }}</span>
           <Badge v-if="item.badge" :class="{ 'ml-auto': !root, 'ml-2': root }" :value="item.badge" />
           <span v-if="item.shortcut" class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{ item.shortcut }}</span>
           <i v-if="hasSubmenu" :class="['pi pi-angle-down ml-auto', { 'pi-angle-down': root, 'pi-angle-right': !root }]"></i>
@@ -64,7 +64,7 @@ const menuStyle = ref({
       <template #start>
         <div class="flex items-center gap-2">
           <img src="/DataLedge-logo.png" class="w-14 h-14" alt="DataLedge Logo">
-          <h2 class="text-lg md:text-2xl ml-2 font-bold">DataLedge</h2>
+          <h2 class="text-lg md:text-2xl ml-2 text-white font-bold">DataLedge</h2>
         </div>
       </template>
     </Menubar>

@@ -50,7 +50,6 @@ const MyPreset = definePreset(Nora, {
     button: {
       sm: {
         fontsize: '3em',
-
       },
       colorScheme: {
         light: {
