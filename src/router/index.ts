@@ -4,6 +4,7 @@ import DashboardOverviewPage from '@/pages/DashboardOverviewPage.vue'
 import DashboardPage from '@/pages/DashboardPage.vue'
 import DataSourcesPage from '@/pages/DataSourcesPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
+import { useAuthStore } from '@/hooks/authStore.ts'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,25 +14,32 @@ const router = createRouter({
       path: '/dashboard',
       component: DashboardPage,
       children: [
-        // 1. ADD THIS DEFAULT CHILD ROUTE
         {
           path: '', // Renders when the path is exactly '/dashboard'
           name: 'dashboard-home',
           component: DashboardOverviewPage, // Create this new component
         },
-        // 2. Your existing child route
         {
           path: 'datasources',
           name: 'datasources',
           component: DataSourcesPage,
         }
-      ]
+      ],
+      meta: { requiresAuth: true },
     },
     {
       path: '/login',
       component: LoginPage,
     }
   ],
+})
+
+router.beforeEach((to) => {
+  const auth = useAuthStore()
+
+  if (to.meta.requiresAuth && !auth.isAuthenticated) {
+    return '/login'
+  }
 })
 
 export default router

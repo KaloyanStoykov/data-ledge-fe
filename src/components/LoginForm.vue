@@ -38,10 +38,18 @@ import Button from 'primevue/button'
 import Form from '@primevue/forms/form';
 import { z } from 'zod';
 import { useToast } from 'primevue/usetoast';
+import type { FormSubmitEvent } from '@primevue/forms'
+// 1. Import the Auth Store
+import { useAuthStore } from '@/hooks/authStore.ts'// 2. Import useRouter for navigation after successful login
+import { useRouter } from 'vue-router';
 
 const toast = useToast();
+const authStore = useAuthStore(); // Initialize the store
+const router = useRouter(); // Initialize router
 
-const initialValues = ref({
+// Define the type for the form values based on the schema
+
+const initialValues = ref<LoginFormValues>({
   username: '',
   password: '',
 })
@@ -53,9 +61,39 @@ const resolver =  zodResolver(
   })
 );
 
-const onFormSubmit = ({ valid }) => {
-  if (!valid) {
-    toast.add({ severity: 'error', summary: 'Fill in required fields!.', life: 3000 });
+// 3. Update onFormSubmit to perform the login
+const onFormSubmit = async ({ e }: { e: FormSubmitEvent}) => {
+  // The 'e.valid' check is redundant here because @submit only fires when valid
+  // But we can check for values in case of any custom logic or server errors
+
+  try {
+    // Call the login action from the Pinia store
+    //await authStore.login(values.username, values.password);
+
+    // If login is successful (no error thrown)
+    toast.add({
+      severity: 'success',
+      summary: 'Login Successful',
+      detail: 'You have been logged in!',
+      life: 3000
+    });
+
+    // Navigate to the dashboard or home page
+    //router.push('/'); // Change '/home' to your desired post-login route
+
+  } catch (error) {
+    // Handle API login errors
+    console.error('Login failed:', error);
+
+    // Display a generic error message or a specific one if the error object provides it
+    const errorMessage = error instanceof Error ? error.message : 'Login failed. Please check your credentials.';
+
+    toast.add({
+      severity: 'error',
+      summary: 'Login Failed',
+      detail: errorMessage,
+      life: 5000
+    });
   }
 };
 </script>
