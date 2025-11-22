@@ -12,18 +12,13 @@
           <InputText v-model="text1" placeholder="Search (To be developed) ..." class="w-1/2" />
         </InputGroup>
       </div>
-      <Button
-        icon="pi pi-plus"
-        label="Create"
-        variant="primary"
-        @click="handleCreate"
-      ></Button>
+      <Button icon="pi pi-plus" label="Create" variant="primary" @click="handleCreate"></Button>
     </div>
 
     <Dialog
       v-model:visible="openDialog"
       modal
-      :header="createSources ? 'Create datasource': 'Edit Datasource'"
+      :header="createSources ? 'Create datasource' : 'Edit Datasource'"
       :style="{ width: '25rem' }"
     >
       <span class="text-surface-500 dark:text-surface-400 block mb-8">Create a new datasource</span>
@@ -51,12 +46,7 @@
             placeholder="Select a datatype..."
             class="w-full md:w-56"
           />
-          <Message
-            v-if="$form.typeId?.invalid"
-            severity="error"
-            size="small"
-            variant="simple"
-          >
+          <Message v-if="$form.typeId?.invalid" severity="error" size="small" variant="simple">
             {{ $form.typeId.error?.message }}
           </Message>
         </div>
@@ -78,7 +68,6 @@
         </div>
         <Button type="submit" severity="primary" label="Submit" />
       </Form>
-
     </Dialog>
 
     <div class="w-11/12 flex-1">
@@ -94,7 +83,13 @@
         <Column field="url" header="Url"></Column>
         <Column class="w-10 text-red-300">
           <template #body="{ data }">
-            <Button icon="pi pi-search" variant="outlined" severity="secondary" size="sm" @click="handleEdit(data)" />
+            <Button
+              icon="pi pi-search"
+              variant="outlined"
+              severity="secondary"
+              size="sm"
+              @click="handleEdit(data)"
+            />
           </template>
         </Column>
       </DataTable>
@@ -110,6 +105,7 @@ import { Column, InputGroupAddon, InputGroup, Dialog, DataTable, InputText } fro
 import Button from 'primevue/button'
 import type { CreateDataSource, DataType } from '@/export/exports.ts'
 import Message from 'primevue/message'
+import { useAuthStore } from '@/hooks/authStore.ts'
 import type { FormResolverOptions } from '@primevue/forms'
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
@@ -118,16 +114,26 @@ import Toast from 'primevue/toast'
 import Select from 'primevue/select'
 import { useToast } from 'primevue/usetoast'
 
+const authStore = useAuthStore();
+
 onMounted(async () => {
   const result = await axios.get('http://localhost:8080/datasources', {
     params: {
       pageNumber: 0,
       pageSize: 10,
     },
+    headers: {
+      Authorization : `Bearer ${authStore.token}`
+    }
   })
 
-  const dataTypesResult = await axios.get('http://localhost:8080/datasource-types')
-
+  const dataTypesResult = await axios.get('http://localhost:8080/datasource-types',
+    {
+      headers: {
+        Authorization : `Bearer ${authStore.token}`
+      }
+    }
+  );
   items.value = result.data.items
   console.log(items.value)
   dataTypes.value = dataTypesResult.data.dataTypes

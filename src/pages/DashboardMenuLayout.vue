@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
+import { useAuthStore} from '@/hooks/authStore.ts'
+
+const authStore = useAuthStore();
 
 const checked = ref(localStorage.getItem('dark-mode') !== null)
 
@@ -113,11 +116,11 @@ import 'primeicons/primeicons.css'
               class="m-4 flex items-center justify-between cursor-pointer p-4 gap-2 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
             >
               <div class="flex items-center gap-2">
-                <Avatar
-                  image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
-                  shape="circle"
-                />
-                <span class="font-bold">Amy Elsner</span>
+                <div class="flex flex-col">
+                  <p>Logged in as:</p>
+                  <p class="font-bold text-lg">{{authStore.user?.name}}</p>
+                </div>
+
               </div>
 
               <ToggleSwitch v-model="checked">

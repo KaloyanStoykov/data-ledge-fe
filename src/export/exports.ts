@@ -18,3 +18,24 @@ export interface CreateDataSource {
   created: string
   updated: string
 }
+
+export interface LoginRequest {
+  email: string,
+  password: string,
+}
+
+export interface SignUpRequest {
+  name: string,
+  email: string,
+  password: string
+}
+
+export interface User {
+  id: number,
+  name: string,
+  email: string,
+}
+
+export interface SignUpResponse {
+  message: string
+}

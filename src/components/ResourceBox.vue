@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { PropType } from 'vue'
+
 const props = defineProps({
   iconClass: {
     type: String,
@@ -7,7 +9,8 @@ const props = defineProps({
   title: {
     type: String,
     required: true,
-  }
+  },
+
 })
 </script>
 

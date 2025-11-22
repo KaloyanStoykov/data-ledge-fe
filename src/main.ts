@@ -127,6 +127,14 @@ const MyPreset = definePreset(Nora, {
         }
       }
     },
+    inputtext: {
+      root: {
+        root: {
+          borderColor: 'transparent',
+          borderRadius: '0.5em'
+        }
+      }
+    },
     menu: {
       root:{
         borderColor: 'transparent',

@@ -1,12 +1,11 @@
-
 <template>
   <div class="card flex justify-center flex-col">
-    <Toast />
-    <h2 class="text-3xl font-bold text-center mb-2">Login.</h2>
+    <Toast position="top-left" />
+    <h2 class="text-3xl font-bold text-center mb-2">Welcome Back.</h2>
     <Form v-slot="$form" :initialValues :resolver="resolver" @submit="onFormSubmit" class="flex flex-col gap-4 w-full sm:w-60">
       <div class="flex flex-col gap-1">
-        <InputText name="username" type="text" placeholder="Username" fluid />
-        <Message v-if="$form.username?.invalid" severity="error" size="small" variant="simple">{{ $form.username.error.message }}</Message>
+        <InputText name="email" type="text" placeholder="Email" fluid />
+        <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{ $form.email.error.message }}</Message>
       </div>
       <div class="flex flex-col gap-1">
         <Password name="password" placeholder="Password" :feedback="false" toggleMask fluid />
@@ -37,11 +36,13 @@ import { InputText } from 'primevue'
 import Button from 'primevue/button'
 import Form from '@primevue/forms/form';
 import { z } from 'zod';
+import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
-import type { FormSubmitEvent } from '@primevue/forms'
+import type { LoginRequest } from '@/export/exports.ts'
 // 1. Import the Auth Store
 import { useAuthStore } from '@/hooks/authStore.ts'// 2. Import useRouter for navigation after successful login
 import { useRouter } from 'vue-router';
+import type { FormSubmitEvent } from '@primevue/forms'
 
 const toast = useToast();
 const authStore = useAuthStore(); // Initialize the store
@@ -49,51 +50,46 @@ const router = useRouter(); // Initialize router
 
 // Define the type for the form values based on the schema
 
-const initialValues = ref<LoginFormValues>({
-  username: '',
+const initialValues = ref<LoginRequest>({
+  email: '',
   password: '',
 })
 
 const resolver =  zodResolver(
   z.object({
-    username: z.string().min(1, { message: 'Username is required.' }),
+    email: z.string().min(1, { message: 'Email is required.' }),
     password: z.string().min(1, { message: 'Password is required.' })
   })
 );
 
-// 3. Update onFormSubmit to perform the login
-const onFormSubmit = async ({ e }: { e: FormSubmitEvent}) => {
-  // The 'e.valid' check is redundant here because @submit only fires when valid
-  // But we can check for values in case of any custom logic or server errors
 
-  try {
-    // Call the login action from the Pinia store
-    //await authStore.login(values.username, values.password);
+const onFormSubmit = async (event: FormSubmitEvent<Record<string, string>>) => {
+  const values = event.values
 
-    // If login is successful (no error thrown)
-    toast.add({
-      severity: 'success',
-      summary: 'Login Successful',
-      detail: 'You have been logged in!',
-      life: 3000
-    });
+  if(event.valid){
+    try {
+      await authStore.login(values.email, values.password);
 
-    // Navigate to the dashboard or home page
-    //router.push('/'); // Change '/home' to your desired post-login route
+      toast.add({
+        severity: 'success',
+        summary: 'Login Successful',
+        detail: 'You have been logged in!',
+        life: 3000
+      });
 
-  } catch (error) {
-    // Handle API login errors
-    console.error('Login failed:', error);
+      await router.push('/dashboard');
 
-    // Display a generic error message or a specific one if the error object provides it
-    const errorMessage = error instanceof Error ? error.message : 'Login failed. Please check your credentials.';
+    } catch (error: unknown) {
 
-    toast.add({
-      severity: 'error',
-      summary: 'Login Failed',
-      detail: errorMessage,
-      life: 5000
-    });
+      toast.add({
+        severity: 'error',
+        summary: 'Login Failed',
+        detail: error.message,
+        life: 5000
+      });
+    }
   }
+
 };
+
 </script>

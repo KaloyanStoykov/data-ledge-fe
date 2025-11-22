@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/pages/HomePage.vue'
 import DashboardOverviewPage from '@/pages/DashboardOverviewPage.vue'
-import DashboardPage from '@/pages/DashboardPage.vue'
+import DashboardMenuLayout from '@/pages/DashboardMenuLayout.vue'
 import DataSourcesPage from '@/pages/DataSourcesPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import { useAuthStore } from '@/hooks/authStore.ts'
+import SignUpPage from '@/pages/SignUpPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,7 +13,7 @@ const router = createRouter({
     { path: '/', component: HomePage},
     {
       path: '/dashboard',
-      component: DashboardPage,
+      component: DashboardMenuLayout,
       children: [
         {
           path: '', // Renders when the path is exactly '/dashboard'
@@ -30,6 +31,10 @@ const router = createRouter({
     {
       path: '/login',
       component: LoginPage,
+    },
+    {
+      path: '/signup',
+      component: SignUpPage,
     }
   ],
 })
