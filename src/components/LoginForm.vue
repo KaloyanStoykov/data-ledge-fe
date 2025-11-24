@@ -39,8 +39,7 @@ import { z } from 'zod';
 import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
 import type { LoginRequest } from '@/export/exports.ts'
-// 1. Import the Auth Store
-import { useAuthStore } from '@/hooks/authStore.ts'// 2. Import useRouter for navigation after successful login
+import { useAuthStore } from '@/hooks/authStore.ts'
 import { useRouter } from 'vue-router';
 import type { FormSubmitEvent } from '@primevue/forms'
 
@@ -48,9 +47,9 @@ const toast = useToast();
 const authStore = useAuthStore(); // Initialize the store
 const router = useRouter(); // Initialize router
 
-// Define the type for the form values based on the schema
 
 const initialValues = ref<LoginRequest>({
+
   email: '',
   password: '',
 })
@@ -84,7 +83,7 @@ const onFormSubmit = async (event: FormSubmitEvent<Record<string, string>>) => {
       toast.add({
         severity: 'error',
         summary: 'Login Failed',
-        detail: error.message,
+        detail: error.response.data.message,
         life: 5000
       });
     }

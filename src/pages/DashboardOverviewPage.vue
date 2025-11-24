@@ -6,10 +6,20 @@ import { useRouter } from 'vue-router'
 const authStore = useAuthStore();
 const router = useRouter();
 
-const logout = () => {
-  authStore.logout();
-  router.push('/login');
+// 1. Make the function async
+const logout = async () => {
+  try {
+    // 2. Wait for the store to finish the network call/state cleanup
+    await authStore.logout();
+  } catch (error) {
+    console.error("Logout failed", error);
+  } finally {
+    // 3. Redirect regardless of success/failure
+    await router.replace('/login');
+  }
 }
+
+
 </script>
 
 <template>
@@ -20,7 +30,7 @@ const logout = () => {
     </h2>
     <div class="grid grid-cols-2 md:grid-cols-2 gap-6">
       <ResourceBox title="Datasources" iconClass="pi pi-user"/>
-      <ResourceBox title="Logout" iconClass="pi pi-sign-out" :onclick="logout" />
+      <ResourceBox title="Logout" iconClass="pi pi-sign-out" @click="logout" />
     </div>
   </main>
 

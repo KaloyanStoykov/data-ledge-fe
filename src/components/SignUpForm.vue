@@ -27,19 +27,18 @@ const initialValues = ref<SignUpRequest>({
 const resolver = zodResolver(
   z.object({
     name: z.string().min(1, { message: 'Name is required.' }),
-    email: z.string().min(1, { message: 'Email is required.' }),
-    password: z.string().min(1, { message: 'Password is required.' }),
+    email: z.email({ message: 'Invalid email address.' }).min(1, { message: 'Email is required.' }),
+    password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
   }),
 )
 
-const onFormSubmit = async (event: FormSubmitEvent<Record<string, string>>) => {
-  const values = event?.values
+const onFormSubmit = async (event: FormSubmitEvent) => {
+  const { valid, values } = event;
 
-
-  if (event.valid) {
+  if (valid) {
     try {
-
-      await authStore.signup(values.name, values.email, values.password)
+      const formValues = values as SignUpRequest;
+      await authStore.signup(formValues.name, formValues.email, formValues.password);
 
       toast.add({
         severity: 'success',
@@ -49,11 +48,14 @@ const onFormSubmit = async (event: FormSubmitEvent<Record<string, string>>) => {
       })
 
       await router.push('/login')
+
     } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.response.data.message : 'An unknown error occurred';
+
       toast.add({
         severity: 'error',
         summary: 'Signup Failed',
-        detail: error.message,
+        detail: errorMessage,
         life: 5000,
       })
     }
@@ -65,23 +67,25 @@ const onFormSubmit = async (event: FormSubmitEvent<Record<string, string>>) => {
   <Toast position="top-right"></Toast>
   <Form
     v-slot="$form"
-    :initialValues
+    :initialValues="initialValues"
     :resolver="resolver"
     @submit="onFormSubmit"
     class="flex flex-col gap-4 w-full"
   >
     <div class="flex flex-col gap-1">
       <InputText name="name" type="text" placeholder="Name" fluid />
-      <Message v-if="$form.name?.invalid" severity="error" size="small" variant="simple">{{
-        $form.name.error.message
-      }}</Message>
+      <Message v-if="$form.name?.invalid" severity="error" size="small" variant="simple">
+        {{ $form.name.error.message }}
+      </Message>
     </div>
+
     <div class="flex flex-col gap-1">
       <InputText name="email" type="text" placeholder="Email" fluid />
-      <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{
-        $form.email.error.message
-      }}</Message>
+      <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">
+        {{ $form.email.error.message }}
+      </Message>
     </div>
+
     <div class="flex flex-col gap-1">
       <Password name="password" placeholder="Password" :feedback="false" toggleMask fluid />
       <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">
@@ -90,6 +94,7 @@ const onFormSubmit = async (event: FormSubmitEvent<Record<string, string>>) => {
         </ul>
       </Message>
     </div>
+
     <Button
       type="submit"
       label="Create account"

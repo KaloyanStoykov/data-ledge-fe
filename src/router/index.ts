@@ -39,11 +39,27 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to) => {
+router.beforeEach(async (to, from, next) => {
   const auth = useAuthStore()
 
+  // 1. If the user is null, they might just be "refreshed" out of state.
+  //    Try to fetch the user from the backend cookie before deciding.
+  if (!auth.isAuthenticated) {
+    await auth.checkAuth()
+  }
+
+  // 2. Now check if route requires auth
   if (to.meta.requiresAuth && !auth.isAuthenticated) {
-    return '/login'
+    // User is genuinely not logged in
+    next('/login')
+  }
+  else if ((to.path === '/login' || to.path === '/signup') && auth.isAuthenticated) {
+    // User is logged in but trying to visit login page
+    next('/dashboard')
+  }
+  else {
+    // Allow navigation
+    next()
   }
 })
 

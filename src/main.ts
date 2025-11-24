@@ -135,6 +135,13 @@ const MyPreset = definePreset(Nora, {
         }
       }
     },
+    inputgroup: {
+      addon: {
+        root: {
+          borderColor: 'transparent',
+        }
+      }
+    },
     menu: {
       root:{
         borderColor: 'transparent',

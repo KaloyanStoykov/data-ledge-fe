@@ -13,6 +13,7 @@
   background: #1f1f1f;
 }
 
+
 @layer utilities {
   .animate-delay-500 {
     animation-duration: 500ms;
