@@ -42,7 +42,6 @@ const visible = ref(false)
 import Drawer from 'primevue/drawer'
 import Button from 'primevue/button'
 import { ToggleSwitch } from 'primevue'
-import Avatar from 'primevue/avatar'
 import 'primeicons/primeicons.css'
 </script>
 

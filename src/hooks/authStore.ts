@@ -30,6 +30,11 @@ export const useAuthStore = defineStore('auth', () => {
     console.log(res);
   }
 
+  async function deleteMyAccount() {
+    const res = await axios.delete(`http://localhost:8080/auth/delete/${user.value?.id}`)
+    console.log(res)
+  }
+
   async function logout() {
     try {
       // 1. Tell backend to kill the cookie
@@ -53,5 +58,5 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
 
-  return { user, isAuthenticated, login, logout, signup, checkAuth }
+  return { user, isAuthenticated, login, logout, signup, checkAuth, deleteMyAccount }
 })

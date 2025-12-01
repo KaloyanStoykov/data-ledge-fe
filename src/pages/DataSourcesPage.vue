@@ -166,7 +166,6 @@ const initialValues = ref<CreateDataSource>({
   updated: new Date().toISOString(),
 })
 
-// --- 1. Helper to Get Type Name for Table ---
 const getTypeName = (item: any) => {
   // Handle case where item has typeId (flat) or item.type.id (nested object)
   const idToCheck = item.typeId ?? item.type?.id;
@@ -176,23 +175,39 @@ const getTypeName = (item: any) => {
 
 onMounted(async () => {
   isLoadingDataSources.value = true;
+
   try {
-    // 1. Load Data Sources
-    const result = await axios.get('http://localhost:8080/datasources', {
-      params: { pageNumber: 0, pageSize: 10 },
-    })
+    // 1. Load Data Types (Essential UI data, should run even if data sources fail)
+    const dataTypesResult = await axios.get('http://localhost:8080/datasource-types', {});
+    dataTypes.value = dataTypesResult.data.dataTypes || [];
 
-    // 2. Load Types
-    const dataTypesResult = await axios.get('http://localhost:8080/datasource-types', {
-    });
+    // 2. Load Data Sources (User-specific, may fail with 404/NotFound)
+    try {
+      const result = await axios.get('http://localhost:8080/datasources', {
+        params: { pageNumber: 0, pageSize: 10 },
+      });
+      items.value = result.data.items || [];
+    } catch (error) {
+      // If data sources retrieval fails (e.g., 404 Not Found),
+      // we log the specific error but continue execution.
+      // The user will just see an empty list, but the data types will still be loaded.
+      if (error.response && error.response.status === 404) {
+        console.info("No data sources found for the user, continuing.", error);
+        items.value = []; // Explicitly set to empty array
+      } else {
+        // Re-throw or handle other critical errors (e.g., 500 server error)
+        console.error("Failed to load user data sources:", error);
+        items.value = [];
+      }
+    }
 
-    items.value = result.data.items || []
-    dataTypes.value = dataTypesResult.data.dataTypes || []
   } catch (error) {
-    console.error("Failed to load data", error);
-    toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to load datasources', life: 3000 });
+    // This catch block handles CRITICAL failures (like 500 or network issues)
+    // with the 'datasource-types' API or any code execution errors.
+    console.error("Critical failure during initial data load:", error);
+    dataTypes.value = []; // Ensure state is handled
   } finally {
-    isLoadingDataSources.value = false
+    isLoadingDataSources.value = false;
   }
 })
 
@@ -267,9 +282,7 @@ const onFormSubmit = async (event: FormSubmitEvent) => {
         }
       } else {
         // Update
-        await axios.put(`http://localhost:8080/datasources/${values.id}`, values, {
-          headers: { Authorization : `Bearer ${authStore.token}` }
-        })
+        await axios.put(`http://localhost:8080/datasources/${values.id}`, values);
 
         // Update local state to reflect changes immediately
         const index = items.value.findIndex(i => i.id === values.id)
