@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useAuthStore } from '@/hooks/authStore.ts'
+import { useAuthStore} from '@/hooks/authStore.ts'
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 
 // When application renders, check for darkmode
 onMounted(() => {
@@ -10,9 +10,10 @@ onMounted(() => {
   if (darkMode !== null) {
     document.documentElement.classList.toggle('my-app-dark')
   }
+
+
 })
 </script>
-
 <template>
   <main>
     <RouterView />
