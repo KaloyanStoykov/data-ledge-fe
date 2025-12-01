@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import { definePreset } from '@primevue/themes'
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
+import ConfirmationService from 'primevue/confirmationservice';
 import AnimateOnScroll from 'primevue/animateonscroll';
 import './style.css'
 import Nora from '@primevue/themes/nora';
@@ -16,6 +17,7 @@ app.directive('animateonscroll', AnimateOnScroll)
 app.directive('styleclass', StyleClass);
 app.directive('ripple', Ripple);
 app.use(ToastService);
+app.use(ConfirmationService);
 
 const MyPreset = definePreset(Nora, {
   semantic: {
@@ -50,7 +52,6 @@ const MyPreset = definePreset(Nora, {
     button: {
       sm: {
         fontsize: '3em',
-
       },
       colorScheme: {
         light: {
@@ -128,6 +129,21 @@ const MyPreset = definePreset(Nora, {
         }
       }
     },
+    inputtext: {
+      root: {
+        root: {
+          borderColor: 'transparent',
+          borderRadius: '0.5em'
+        }
+      }
+    },
+    inputgroup: {
+      addon: {
+        root: {
+          borderColor: 'transparent',
+        }
+      }
+    },
     menu: {
       root:{
         borderColor: 'transparent',
@@ -162,6 +178,16 @@ const MyPreset = definePreset(Nora, {
       root: {
         borderRadius: '0.5em'
       }
+    },
+    card: {
+      colorScheme: {
+        light: {
+          background: 'red'
+        },
+        dark: {
+          background: '{primary.500}'
+        }
+      }
     }
 
   }
@@ -181,5 +207,6 @@ app.use(PrimeVue, {
 });
 app.use(createPinia())
 app.use(router)
+app.use(ConfirmationService)
 
 app.mount('#app')
