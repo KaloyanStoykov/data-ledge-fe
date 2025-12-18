@@ -4,16 +4,38 @@ export interface DataType {
   description: string
 }
 
+export interface DataTypesResponse {
+  dataTypes: DataType[]
+}
+
+export interface DataSource {
+  id: number
+  name: string
+  typeId: number
+  type?: DataType
+  description: string,
+  url: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface CreateDataSourceResponse {
+  id: number
+  name: string
+}
+
+export interface GetDataSourceResponse {
+  items: DataSource[],
+  totalCount: number
+  page: number
+  pageSize: number
+}
+
 export interface CreateDataSource {
   id?: number
   name: string
   typeId: number
   description: string
-  type?: {
-    id: number
-    name: string
-    description: string
-  }
   url: string
   created: string
   updated: string
@@ -36,6 +58,6 @@ export interface User {
   email: string,
 }
 
-export interface SignUpResponse {
-  message: string
-}
+
+// Config
+export const API_BASEURL = 'http://localhost:8080';

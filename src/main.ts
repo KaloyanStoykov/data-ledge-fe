@@ -188,6 +188,149 @@ const MyPreset = definePreset(Nora, {
           background: '{primary.500}'
         }
       }
+    },
+    tabs: {
+      transition: {
+        duration: '0.2s'
+      },
+      tablist: {
+        background: 'transparent',
+        borderColor: '{surface.200}', // Light mode border
+        borderWidth: '0 0 1px 0'
+      },
+      tab: {
+        background: 'transparent',
+        hoverBackground: 'transparent',
+        activeBackground: 'transparent',
+        padding: '1rem 1.25rem',
+        fontWeight: '600',
+        color: '{surface.600}',
+        hoverColor: '{surface.900}',
+        activeColor: '{secondary.500}',
+        gap: '0.5rem',
+        focusRing: {
+          width: '0', // Clean look without default browser rings
+          shadow: 'none'
+        }
+      },
+      activeBar: {
+        height: '2px',
+        bottom: '-1px',
+        background: '{secondary.500}'
+      },
+      tabpanel: {
+        background: 'transparent',
+        color: '{surface.700}',
+        padding: '1.25rem 0'
+      },
+      colorScheme: {
+        light: {
+          tablist: {
+            borderColor: '{surface.200}'
+          },
+          tab: {
+            color: '{surface.500}',
+            hoverColor: '{surface.800}',
+            activeColor: '{secondary.600}'
+          },
+          activeBar: {
+            background: '{secondary.600}'
+          }
+        },
+        dark: {
+          tablist: {
+            borderColor: '{surface.700}'
+          },
+          tab: {
+            color: '{surface.400}',
+            hoverColor: '{surface.0}',
+            activeColor: '{secondary.400}'
+          },
+          activeBar: {
+            background: '{secondary.400}'
+          },
+          tabpanel: {
+            color: '{surface.300}'
+          }
+        }
+      }
+    },
+    datatable: {
+      header: {
+        background: 'transparent',
+        borderColor: '{surface.200}',
+        color: '{surface.900}',
+        padding: '1rem 1rem'
+      },
+      headerCell: {
+        background: 'transparent',
+        hoverBackground: '{surface.100}',
+        color: '{surface.700}',
+        hoverColor: '{surface.900}',
+        gap: '0.5rem',
+        focusRing: {
+          width: '0',
+          shadow: 'none'
+        }
+      },
+      row: {
+        background: 'transparent',
+        hoverBackground: '{surface.50}',
+        selectedBackground: '{secondary.50}',
+        color: '{surface.700}',
+        hoverColor: '{surface.900}',
+        selectedColor: '{secondary.700}'
+      },
+      bodyCell: {
+        borderColor: '{surface.200}',
+        padding: '1rem 1rem'
+      },
+      sortIcon: {
+        color: '{surface.400}',
+        hoverColor: '{secondary.500}',
+        size: '0.875rem'
+      },
+      colorScheme: {
+        light: {
+          header: {
+            borderColor: '{surface.200}'
+          },
+          row: {
+            hoverBackground: '{surface.50}',
+            selectedBackground: '{secondary.50}'
+          },
+          bodyCell: {
+            borderColor: '{surface.100}'
+          }
+        },
+        dark: {
+          header: {
+            background: '{surface.900}',
+            borderColor: '{surface.700}',
+            color: '{surface.0}'
+          },
+          headerCell: {
+            hoverBackground: '{surface.800}',
+            color: '{surface.300}',
+            hoverColor: '{surface.0}'
+          },
+          row: {
+            background: 'transparent',
+            hoverBackground: '{surface.800}',
+            selectedBackground: '{secondary.900}',
+            color: '{surface.300}',
+            hoverColor: '{surface.0}',
+            selectedColor: '{secondary.100}'
+          },
+          bodyCell: {
+            borderColor: '{surface.700}'
+          },
+          sortIcon: {
+            color: '{surface.500}',
+            hoverColor: '{secondary.400}'
+          }
+        }
+      }
     }
 
   }
