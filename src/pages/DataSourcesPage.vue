@@ -162,7 +162,7 @@
               />
             </div>
 
-            <div v-else-if="getTypeName(initialValues) === 'FILE_UPLOAD'" class="flex flex-col gap-3">
+            <div v-else-if="getTypeName(initialValues).includes('File')" class="flex flex-col gap-3">
               <label class="text-xs font-bold text-surface-500 uppercase">Select File</label>
               <FileUpload
                 mode="basic"
@@ -250,9 +250,13 @@ const initialValues = ref<DataSource>({
 })
 
 const getTypeName = (item: DataSource) => {
-  const idToCheck = item.type?.id
-  const typeObj = dataTypes.value.find((t) => t.id === idToCheck)
-  return typeObj ? typeObj.name : item.id // Return Name if found, else ID
+  // Check nested object first, then top-level ID
+  const idToCheck = item.type?.id || item.typeId;
+
+  if (!idToCheck) return 'Unknown';
+
+  const typeObj = dataTypes.value.find((t) => t.id === idToCheck);
+  return typeObj ? typeObj.name : `ID: ${idToCheck}`;
 }
 
 const fetchItems = async () => {
