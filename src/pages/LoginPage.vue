@@ -17,7 +17,7 @@ onMounted(() => {
 
 <template>
   <main class="w-full h-screen flex">
-    <aside class="h-full w-full max-w-96 flex flex-col p-4 relative">
+    <aside class="h-full bg-primary-50 dark:bg-primary-500 w-full max-w-96 flex flex-col p-4 relative">
       <div class="absolute top-4 right-4">
         <DarkModeSwitch />
       </div>

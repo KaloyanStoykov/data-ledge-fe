@@ -4,8 +4,8 @@ import SignUpForm from '@/components/SignUpForm.vue'
 </script>
 
 <template>
-  <section class="flex flex-col w-full h-screen items-center justify-center flex-1 p-4 gap-4">
-    <div class="bg-neutral-200 dark:bg-primary-500 w-full max-w-6xl h-[80dvh] lg:max-h-2/3 p-3 gap-4 flex flex-col lg:flex-row rounded-xl">
+  <section class="flex flex-col w-full bg-primary-50 dark:bg-neutral-800 h-screen items-center justify-center flex-1 p-4 gap-4">
+    <div class="bg-white dark:bg-primary-500 w-full max-w-6xl h-[80dvh] lg:max-h-2/3 p-3 gap-4 flex flex-col lg:flex-row rounded-xl">
       <div class="flex flex-col items-center justify-center max-h-1/3 lg:max-h-full lg:flex-1 gap-4 relative rounded-xl">
         <img src="/richard-horvath-_nWaeTF6qo0-unsplash%20(1).jpg" alt="" class="object-cover h-full w-full rounded-lg">
         <div class="absolute lg:bottom-5 w-full text-center flex flex-col justify-center items-center">
