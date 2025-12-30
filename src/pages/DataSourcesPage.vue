@@ -23,14 +23,17 @@
         <Button icon="pi pi-plus" label="Create" variant="primary" @click="handleCreate"></Button>
       </div>
 
-      <div class="w-full flex-1 overflow-auto bg-surface-0 dark:bg-surface-800 p-6 pt-0">
-        <div class="w-full h-max text-center pt-10" v-if="isLoadingDataSources">
-          <ProgressSpinner />
-        </div>
+      <div class="w-full flex-1 overflow-hidden bg-surface-0 dark:bg-surface-800 p-6 pt-0 flex flex-col">
 
-        <div v-else class="relative overflow-x-auto bg-transparent rounded-base">
-          <table class="w-full text-sm text-left rtl:text-right text-body">
-            <thead class="border-b-2 border-blue-500 uppercase">
+        <div class="flex-1 flex flex-col min-h-0 relative overflow-hidden">
+
+          <div class="flex-1 flex items-center justify-center" v-if="isLoadingDataSources">
+            <ProgressSpinner />
+          </div>
+
+          <div v-else class="flex-1 overflow-auto bg-transparent rounded-base">
+            <table class="w-full text-sm text-left rtl:text-right text-body">
+              <thead class="border-b-2 border-blue-500 uppercase">
               <tr>
                 <th scope="col" class="p-2 pl-0 font-bold">Name</th>
                 <th scope="col" class="p-2 pl-0 font-bold">Description</th>
@@ -40,40 +43,47 @@
                   <span class="sr-only">Edit</span>
                 </th>
               </tr>
-            </thead>
+              </thead>
 
-            <tbody class="text-primary-200">
+              <tbody class="text-primary-200">
               <tr
                 v-for="item in items"
                 :key="item.id"
                 class="bg-neutral-primary-soft hover:bg-neutral-secondary-medium border-b-1 border-b-primary-400 transition-colors"
               >
-                <th scope="row" class="py-3 font-medium text-heading whitespace-nowrap text-primary-500 dark:text-primary-200">
+                <th scope="row" class="py-3 font-medium text-heading whitespace-nowrap">
                   {{ item.name }}
                 </th>
-                <td class="font-medium text-primary-500 dark:text-primary-200">
+                <td class="font-medium">
                   {{ item.description }}
                 </td>
-                <td class="font-medium text-primary-500 dark:text-primary-200 truncate max-w-[200px]" :title="item.url">
+                <td class="font-medium truncate max-w-[200px]" :title="item.url">
                   {{ item.url }}
                 </td>
-                <td class="font-medium text-primary-500 dark:text-primary-200">
+                <td class="font-medium">
                   {{ getTypeName(item) }}
                 </td>
-                <td
-                  class="text-center text-primary-500 dark:text-primary-200 font-medium cursor-pointer hover:text-blue-600"
-                  @click="handleEdit(item)"
-                >
-                  <i class="pi pi-cog" style="font-size: 1.5em"></i>
+                <td class="text-center font-medium cursor-pointer hover:text-blue-600" @click="handleEdit(item)">
+                  <i class="pi pi-cog" style="font-size: 1.5em;"></i>
                 </td>
               </tr>
-            </tbody>
-          </table>
+              </tbody>
+            </table>
 
-          <div v-if="items.length === 0" class="text-center p-4 text-surface-500">
-            No datasources found.
+            <div v-if="items.length === 0" class="text-center p-10 text-surface-500">
+              No datasources found.
+            </div>
           </div>
         </div>
+
+        <Paginator
+          :first="page * pageSize"
+          :rows="pageSize"
+          :totalRecords="totalCount"
+          :rowsPerPageOptions="[10, 20, 30]"
+          @page="onPageChange"
+          class="border-t border-surface-200 dark:border-surface-700"
+        />
       </div>
     </div>
 
@@ -218,6 +228,7 @@ import datasourceService from '@/service/datasourceService.ts'
 import ProgressSpinner from 'primevue/progressspinner'
 import Toast from 'primevue/toast'
 import Select from 'primevue/select'
+import Paginator from 'primevue/paginator';
 import { useToast } from 'primevue/usetoast'
 
 const toast = useToast()
@@ -259,20 +270,23 @@ const getTypeName = (item: DataSource) => {
   return typeObj ? typeObj.name : `ID: ${idToCheck}`;
 }
 
+const onPageChange = (event: any) => {
+  page.value = event.page;
+  pageSize.value = event.rows;
+  fetchItems();
+};
+
 const fetchItems = async () => {
+  isLoadingDataSources.value = true; // Show spinner while changing pages
   try {
-    const result = await datasourceService.getDatasource(page.value, pageSize.value, query.value)
-    items.value = result.items || []
-    totalCount.value = result.totalCount
+    // Pass page and pageSize to your service
+    const result = await datasourceService.getDatasource(page.value, pageSize.value, query.value);
+    items.value = result.items || [];
+    totalCount.value = result.totalCount;
   } catch (error) {
-    if (error.response && error.response.status === 404) {
-      items.value = []
-    } else {
-      console.error('Failed to load data sources:', error)
-      toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to fetch results' })
-    }
+    // ... error handling
   } finally {
-    isLoadingDataSources.value = false
+    isLoadingDataSources.value = false;
   }
 }
 
@@ -284,6 +298,15 @@ const debouncedSearch = debounce(() => {
 // Watch for changes in the search input
 watch(query, () => {
   debouncedSearch()
+})
+
+watch(openDialog, (isOpen) => {
+  if(!isOpen) {
+    isWriting.value = false;
+    writeFileName.value = '';
+    selectedFile.value = null;
+  }
+
 })
 
 onMounted(async () => {

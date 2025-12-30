@@ -260,6 +260,19 @@ const MyPreset = definePreset(Nora, {
         },
       },
     },
+    paginator: {
+      colorScheme: {
+        light: {
+          background: 'transparent',
+        },
+        dark: {
+          background: 'transparent',
+          navButton: {
+            selectedBackground: '{primary.50}'
+          }
+        },
+      },
+    },
     datatable: {
       header: {
         background: 'transparent',
