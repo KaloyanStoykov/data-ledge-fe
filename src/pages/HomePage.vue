@@ -80,53 +80,53 @@ const menuStyle = ref({
     </div>
   </div>
 
-  <section class="h-screen w-full flex flex-col items-center justify-center text-6xl relative p-4">
+<!--  <section class="h-screen w-full flex flex-col items-center justify-center text-6xl relative p-4">-->
 
-    <div class="flex flex-row wrap gap-2 justify-center w-full md:w-11/12">
-      <Card style="width: 33.3%; padding: 1rem; background: none;">
-        <template #header>
-          <i class="pi pi-database p-5" style="font-size: 2rem;"></i>
-        </template>
+<!--    <div class="flex flex-row gap-2 justify-center w-full md:w-11/12">-->
+<!--      <Card style="width: 33.3%; padding: 1rem; background: none;">-->
+<!--        <template #header>-->
+<!--          <i class="pi pi-database p-5" style="font-size: 2rem;"></i>-->
+<!--        </template>-->
 
-        <template #title>Advanced Card</template>
-        <template #content>
-          <p class="m-0 text-lg mt-4">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
-            quas!
-          </p>
-        </template>
+<!--        <template #title>Advanced Card</template>-->
+<!--        <template #content>-->
+<!--          <p class="m-0 text-lg mt-4">-->
+<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque-->
+<!--            quas!-->
+<!--          </p>-->
+<!--        </template>-->
 
-      </Card>
+<!--      </Card>-->
 
-      <Card style="width: 33.3%; padding: 1rem; background: none; border-left: 1px solid;">
-        <template #header>
-          <i class="pi pi-database p-5" style="font-size: 2rem;"></i>
-        </template>
+<!--      <Card style="width: 33.3%; padding: 1rem; background: none; border-left: 1px solid;">-->
+<!--        <template #header>-->
+<!--          <i class="pi pi-database p-5" style="font-size: 2rem;"></i>-->
+<!--        </template>-->
 
-        <template #title>Advanced Card</template>
-        <template #content>
-          <p class="m-0 text-lg mt-4">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
-            quas!
-          </p>
-        </template>
-      </Card>
+<!--        <template #title>Advanced Card</template>-->
+<!--        <template #content>-->
+<!--          <p class="m-0 text-lg mt-4">-->
+<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque-->
+<!--            quas!-->
+<!--          </p>-->
+<!--        </template>-->
+<!--      </Card>-->
 
-      <Card style="width: 33.3%; padding: 1rem; background: none;">
-        <template #header>
-          <i class="pi pi-database p-5" style="font-size: 2rem;"></i>
-        </template>
+<!--      <Card style="width: 33.3%; padding: 1rem; background: none;">-->
+<!--        <template #header>-->
+<!--          <i class="pi pi-database p-5" style="font-size: 2rem;"></i>-->
+<!--        </template>-->
 
-        <template #title>Advanced Card</template>
-        <template #content>
-          <p class="m-0 text-lg mt-4">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
-            quas!
-          </p>
-        </template>
-      </Card>
-    </div>
-  </section>
+<!--        <template #title>Advanced Card</template>-->
+<!--        <template #content>-->
+<!--          <p class="m-0 text-lg mt-4">-->
+<!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque-->
+<!--            quas!-->
+<!--          </p>-->
+<!--        </template>-->
+<!--      </Card>-->
+<!--    </div>-->
+<!--  </section>-->
 
 </template>
 

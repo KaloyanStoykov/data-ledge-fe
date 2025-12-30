@@ -87,7 +87,7 @@ const onFormSubmit = async (event: FormSubmitEvent) => {
     </div>
 
     <div class="flex flex-col gap-1">
-      <Password name="password" placeholder="Password" :feedback="false" toggleMask fluid />
+      <Password name="password" placeholder="Password" :feedback="false" toggleMask fluid/>
       <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">
         <ul class="my-0 flex flex-col gap-1">
           <li v-for="(error, index) of $form.password.errors" :key="index">{{ error.message }}</li>
