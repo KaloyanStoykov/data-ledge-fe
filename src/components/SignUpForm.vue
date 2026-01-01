@@ -96,6 +96,7 @@ const onFormSubmit = async (event: FormSubmitEvent) => {
     </div>
 
     <Button
+      data-testid="signup-button"
       type="submit"
       label="Create account"
       severity="secondary"

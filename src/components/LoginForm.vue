@@ -1,14 +1,14 @@
 <template>
   <div class="card flex justify-center flex-col">
     <Toast position="top-left" />
-    <h2 class="text-3xl font-bold text-center mb-2">Welcome Back.</h2>
+    <h2 data-testid="login-heading" class="text-3xl font-bold text-center mb-2">Welcome Back.</h2>
     <Form v-slot="$form" :initialValues :resolver="resolver" @submit="onFormSubmit" class="flex flex-col gap-4 w-full sm:w-60">
       <div class="flex flex-col gap-1">
-        <InputText name="email" type="text" placeholder="Email" fluid />
+        <InputText data-testid="login-email-input" name="email" type="text" placeholder="Email" fluid />
         <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{ $form.email.error.message }}</Message>
       </div>
       <div class="flex flex-col gap-1">
-        <Password name="password" placeholder="Password" :feedback="false" toggleMask fluid />
+        <Password data-testid="login-password-input" name="password" placeholder="Password" :feedback="false" toggleMask fluid />
         <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">
           <ul class="my-0 flex flex-col gap-1">
             <li v-for="(error, index) of $form.password.errors" :key="index">{{ error.message }}</li>
@@ -16,6 +16,7 @@
         </Message>
       </div>
       <Button
+        data-testid="login-button"
         type="submit"
         label="Login"
         severity="secondary"
