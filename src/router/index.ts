@@ -6,11 +6,13 @@ import DataSourcesPage from '@/pages/DataSourcesPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import { useAuthStore } from '@/hooks/authStore.ts'
 import SignUpPage from '@/pages/SignUpPage.vue'
+import AboutPage from '@/pages/AboutPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', component: HomePage},
+    { path: '/about', component: AboutPage},
     {
       path: '/dashboard',
       component: DashboardMenuLayout,
