@@ -1,29 +1,61 @@
 <template>
-  <div class="card flex justify-center flex-col">
+  <div class="w-full">
     <Toast position="top-left" />
-    <h2 data-testid="login-heading" class="text-3xl font-bold text-center mb-2">Welcome Back.</h2>
-    <Form v-slot="$form" :initialValues :resolver="resolver" @submit="onFormSubmit" class="flex flex-col gap-4 w-full sm:w-60">
-      <div class="flex flex-col gap-1">
-        <InputText data-testid="login-email-input" name="email" type="text" placeholder="Email" fluid />
-        <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{ $form.email.error.message }}</Message>
+
+    <h2 data-testid="login-heading" class="text-3xl font-bold mb-6 text-slate-900 dark:text-white">
+      Welcome Back.
+    </h2>
+
+    <Form
+      v-slot="$form"
+      :initialValues
+      :resolver="resolver"
+      @submit="onFormSubmit"
+      class="flex flex-col gap-5 w-full"
+    >
+      <div class="flex flex-col gap-1.5">
+        <label class="text-sm font-medium text-slate-700 dark:text-slate-300 ml-1">Email</label>
+        <InputText
+          data-testid="login-email-input"
+          name="email"
+          type="text"
+          placeholder="Enter your email"
+          fluid
+          class="!rounded-xl"
+        />
+        <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">
+          {{ $form.email.error.message }}
+        </Message>
       </div>
-      <div class="flex flex-col gap-1">
-        <Password data-testid="login-password-input" name="password" placeholder="Password" :feedback="false" toggleMask fluid />
+
+      <div class="flex flex-col gap-1.5">
+        <div class="flex justify-between items-center px-1">
+          <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
+        </div>
+        <Password
+          data-testid="login-password-input"
+          name="password"
+          placeholder="••••••••"
+          :feedback="false"
+          toggleMask
+          fluid
+          :inputProps="{ class: 'w-full !rounded-xl' }"
+        />
         <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">
           <ul class="my-0 flex flex-col gap-1">
             <li v-for="(error, index) of $form.password.errors" :key="index">{{ error.message }}</li>
           </ul>
         </Message>
       </div>
+
       <Button
         data-testid="login-button"
         type="submit"
-        label="Login"
-        severity="secondary"
+        label="Sign In"
         icon="pi pi-arrow-right"
-        class="mx-auto w-full sm:w-40 h-12 text-lg"
+        iconPos="right"
+        class="w-full h-12 !rounded-xl !bg-blue-600 !border-none hover:!bg-blue-500 transition-all mt-2"
       />
-
     </Form>
   </div>
 </template>
