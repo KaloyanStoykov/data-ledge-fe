@@ -70,24 +70,31 @@ const onFormSubmit = async (event: FormSubmitEvent) => {
     :initialValues="initialValues"
     :resolver="resolver"
     @submit="onFormSubmit"
-    class="flex flex-col gap-4 w-full"
+    class="flex flex-col gap-5 w-full"
   >
     <div class="flex flex-col gap-1">
-      <InputText name="name" type="text" placeholder="Name" fluid />
+      <InputText name="name" type="text" placeholder="Full Name" fluid class="!py-3 !rounded-lg" />
       <Message v-if="$form.name?.invalid" severity="error" size="small" variant="simple">
         {{ $form.name.error.message }}
       </Message>
     </div>
 
     <div class="flex flex-col gap-1">
-      <InputText name="email" type="text" placeholder="Email" fluid />
+      <InputText name="email" type="text" placeholder="Email Address" fluid class="!py-3 !rounded-lg" />
       <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">
         {{ $form.email.error.message }}
       </Message>
     </div>
 
     <div class="flex flex-col gap-1">
-      <Password name="password" placeholder="Password" :feedback="false" toggleMask fluid/>
+      <Password
+        name="password"
+        placeholder="Password"
+        :feedback="false"
+        toggleMask
+        fluid
+        :inputProps="{ class: 'w-full !py-3 !rounded-lg' }"
+      />
       <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">
         <ul class="my-0 flex flex-col gap-1">
           <li v-for="(error, index) of $form.password.errors" :key="index">{{ error.message }}</li>
@@ -99,9 +106,9 @@ const onFormSubmit = async (event: FormSubmitEvent) => {
       data-testid="signup-button"
       type="submit"
       label="Create account"
-      severity="secondary"
       icon="pi pi-arrow-right"
-      class="mx-auto w-full h-12 text-lg"
+      iconPos="right"
+      class="w-full h-12 !rounded-lg !bg-blue-600 !border-none hover:!bg-blue-500 transition-all font-semibold"
     />
   </Form>
 </template>
