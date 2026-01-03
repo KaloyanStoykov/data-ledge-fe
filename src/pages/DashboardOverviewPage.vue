@@ -61,7 +61,7 @@ const requireConfirmation = () => {
 
 <template>
   <main class="w-full h-full md:p-16 p-6 flex flex-col gap-10 items-center justify-center">
-    <h2 class="font-black text-5xl tracking-tight"
+    <h2 data-testid="dashboard-welcome-heading" class="font-black text-5xl tracking-tight"
         v-animateonscroll="{ enterClass: 'animate-enter fade-in-10 zoom-in-75 animate-duration-700' }">
       Welcome, <span class="bg-gradient-to-r from-blue-950 via-blue-700 to-purple-700 bg-clip-text text-transparent">{{authStore.user?.name}}</span>
     </h2>

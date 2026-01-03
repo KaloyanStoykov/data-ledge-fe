@@ -26,7 +26,7 @@ onMounted(() => {
         <img src="/DataLedge-logo.png" alt="" class="dark:block hidden w-16 h-16" />
         <img src="/DataLedge-Dark.png" alt="" class="dark:hidden block w-16 h-16" />
         <LoginForm />
-        <RouterLink to="/signup" class="underline">Don't have an account yet?</RouterLink>
+        <RouterLink to="/signup" class="underline" data-testid="cta-signup">Don't have an account yet?</RouterLink>
       </div>
     </aside>
     <section class="flex-1 hidden lg:block">
