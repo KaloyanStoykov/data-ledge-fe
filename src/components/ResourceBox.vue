@@ -1,3 +1,29 @@
+<<<<<<< Updated upstream
+=======
+<template>
+  <div
+    class="relative group cursor-pointer p-6 border-2 border-surface-200 dark:border-surface-800 rounded-2xl
+           bg-white dark:bg-surface-900 transition-all duration-300 ease-out
+           hover:border-transparent hover:shadow-xl hover:-translate-y-1"
+  >
+    <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-900 via-blue-700 to-purple-700
+                opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+    <div class="relative z-10 flex flex-col items-center justify-center text-center">
+      <div class="mb-4 p-4 rounded-full bg-surface-50 dark:bg-surface-800 group-hover:bg-white/20 transition-colors duration-300">
+        <i :class="[iconClass, 'text-4xl transition-transform duration-300 group-hover:scale-110 group-hover:text-white text-primary-600 dark:text-primary-400']"></i>
+      </div>
+
+      <h3 class="text-xl font-bold tracking-tight text-surface-900 dark:text-surface-0 group-hover:text-white transition-colors duration-300">
+        {{ title }}
+      </h3>
+
+      <i class="pi pi-arrow-up-right absolute top-0 right-0 opacity-0 group-hover:opacity-100 group-hover:text-white p-2 transition-all"></i>
+    </div>
+  </div>
+</template>
+
+>>>>>>> Stashed changes
 <script setup lang="ts">
 import DarkModeSwitch from '@/components/DarkModeSwitch.vue'
 import LoginForm from '@/components/LoginForm.vue'

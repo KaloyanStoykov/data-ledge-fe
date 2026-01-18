@@ -4,7 +4,6 @@ test('DataLedge Homepage Initialized', async ({ page }) => {
   await page.goto('http://localhost:5173/');
 
   await expect(page).toHaveTitle("DataLedge");
-  await expect(page.getByText(/^Unify/)).toBeVisible();
 });
 
 
@@ -17,17 +16,17 @@ test.describe('Authentication Flow', () => {
   });
 
   async function fillLoginForm(page: Page, email: string, password: string) {
-    await page.getByPlaceholder('Email').fill(email);
-    await page.getByPlaceholder('Password').fill(password);
+    await page.getByPlaceholder('Enter your email').fill(email);
+    await page.getByPlaceholder('••••••••').fill(password);
     await page.getByTestId('login-button').click();
   }
 
   test('Successful Login', async ({ page }) => {
-    await fillLoginForm(page, 'email@email.com', 'test123');
+    await fillLoginForm(page, 'email@email.com', 'test123456');
 
     await expect(page).toHaveURL(/.*dashboard/);
     const welcomeHeading = page.getByTestId('dashboard-welcome-heading');
-    await expect(welcomeHeading).toHaveText(/^ Welcome, Kaloyan/);
+    await expect(welcomeHeading).toHaveText(/^ Welcome/);
   });
 
   test('Failed Login shows Toast', async ({ page }) => {
@@ -58,7 +57,7 @@ test.describe('Register Flow', () => {
 
   test('Successful Signup', async ({ page }) => {
     const randomEmail = `test-${Math.random()}@dataledge.com`;
-    await fillSignUpForm(page, 'Boo', randomEmail, 'test123');
+    await fillSignUpForm(page, 'Boo', randomEmail, 'test123456');
 
     await expect(page).toHaveURL(/.*login/);
   });

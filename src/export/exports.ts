@@ -41,6 +41,31 @@ export interface CreateDataSource {
   updated: string
 }
 
+export interface BlobMetadataResponse {
+  id: number
+  name: string
+  created: Date;
+}
+
+export interface GetPagedBlobMetadataResponse {
+  blobsData: BlobMetadataResponse[]
+  totalCount: number
+  page: number
+  pageSize: number
+}
+
+export interface DeleteDataSourceResponse {
+  message: string;
+}
+
+export interface UpdateDataSourceResponse {
+  id: number;
+  name: string;
+  description: string;
+  dataSourceUrl: string; // Matches your Java private String dataSourceUrl
+  updatedAt: string;     // Received as ISO string from Java LocalDateTime
+}
+
 export interface LoginRequest {
   email: string,
   password: string,

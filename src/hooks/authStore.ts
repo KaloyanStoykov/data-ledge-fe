@@ -10,53 +10,61 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
 
   const isAuthenticated = computed(() => !!user.value)
+  const hasCheckAuth = ref(false)
 
   async function login(email: string, password: string) {
     const res = await axios.post('http://localhost:8080/auth/authenticate', {
       email,
       password
-    });
-
+    })
     user.value = res.data
   }
 
   async function signup(name: string, email: string, password: string) {
-    const res = await axios.post('http://localhost:8080/auth/register', {
+    await axios.post('http://localhost:8080/auth/register', {
       name,
       email,
       password
-    });
-
-    console.log(res);
+    })
   }
 
   async function deleteMyAccount() {
-    const res = await axios.delete(`http://localhost:8080/auth/delete/${user.value?.id}`)
-    console.log(res)
+    await axios.delete(`http://localhost:8080/auth/delete/${user.value?.id}`, {
+      withCredentials: true
+    })
+    user.value = null
   }
 
   async function logout() {
     try {
-      // 1. Tell backend to kill the cookie
       await axios.post('http://localhost:8080/auth/logout')
-    } catch (err) {
-      console.error("Logout failed on server, cleaning up client anyway", err)
     } finally {
       user.value = null
     }
   }
 
-  // New function: Check session on page reload
   async function checkAuth() {
     try {
-      // Endpoint that returns the user if the cookie is valid
-      const res = await axios.get('http://localhost:8080/auth/me')
+      const res = await axios.get('http://localhost:8080/auth/me', {
+        withCredentials: true
+      })
       user.value = res.data
-    } catch (error) {
+    } catch {
       user.value = null
+    } finally {
+      hasCheckAuth.value = true
     }
   }
 
-
-  return { user, isAuthenticated, login, logout, signup, checkAuth, deleteMyAccount }
+  return {
+    user,
+    isAuthenticated,
+    hasCheckAuth,
+    login,
+    logout,
+    signup,
+    deleteMyAccount,
+    checkAuth
+  }
 })
+

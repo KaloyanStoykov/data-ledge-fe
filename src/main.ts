@@ -350,6 +350,47 @@ const MyPreset = definePreset(Nora, {
         },
       },
     },
+    checkbox: {
+      root: {
+        borderRadius: '4px',
+        width: '1.25rem',
+        height: '1.25rem',
+      },
+      colorScheme: {
+        light: {
+          root: {
+            borderColor: '{surface.300}',
+            background: '{surface.0}',
+          },
+          checked: {
+            background: '{secondary.500}',
+            borderColor: '{secondary.500}',
+            color: '#ffffff',
+          },
+          hover: {
+            borderColor: '{secondary.500}',
+          }
+        },
+        dark: {
+          root: {
+            borderColor: '{surface.600}',
+            background: '#171717', // Matching your dark background
+          },
+          checked: {
+            background: '{secondary.400}',
+            borderColor: '{secondary.400}',
+            color: '{primary.950}', // Dark icon on light blue background
+          },
+          hover: {
+            borderColor: '{secondary.400}',
+            background: '{surface.800}',
+          },
+          focus: {
+            ringColor: '{secondary.400}',
+          }
+        }
+      }
+    },
   },
 })
 
