@@ -19,7 +19,7 @@ const items = ref([
   },
   {
     label: 'Contact',
-    link: '/',
+    link: '/contact',
     root: true,
     hasSubmenu: false,
   },

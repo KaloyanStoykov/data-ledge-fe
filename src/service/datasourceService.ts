@@ -3,7 +3,10 @@ import {
   type CreateDataSourceResponse,
   type DataSource,
   type DataTypesResponse,
+  type DeleteDataSourceResponse,
   type GetDataSourceResponse,
+  type GetPagedBlobMetadataResponse,
+  type UpdateDataSourceResponse,
 } from '@/export/exports.ts'
 import axios from 'axios'
 
@@ -28,12 +31,33 @@ const datasourceService = {
     const response = await axios.get(`${API_BASEURL}/datasources`, { params });
     return response.data;
   },
+  deleteDataSource: async (id: number): Promise<DeleteDataSourceResponse> => {
+    try {
+      const result = await axios.delete(`${API_BASEURL}/datasources/${id}`);
+      return result.data;
+    } catch (err) {
+      throw err;
+    }
+  },
   createDataSources: async (values: DataSource): Promise<CreateDataSourceResponse> => {
     try {
       const result = await axios.post(`${API_BASEURL}/datasources`, values)
       return result.data;
     }
     catch(err){
+      throw err;
+    }
+  },
+  updateDataSource: async (id: number, values: DataSource): Promise<UpdateDataSourceResponse> => {
+    try {
+      const result = await axios.put(`${API_BASEURL}/datasources/${id}`, {
+        name: values.name,
+        description: values.description,
+        typeId: values.typeId,
+        dataSourceUrl: values.url
+      });
+      return result.data;
+    } catch (err) {
       throw err;
     }
   },
@@ -54,6 +78,28 @@ const datasourceService = {
     const result = await axios.post(`${API_BASEURL}/blob/saveApiContent`, params);
     console.log(result);
     return result.data;
+  },
+  deleteFilesBatch: async (blobFileNames: string[]): Promise<string> => {
+    try {
+      const result = await axios.delete(`${API_BASEURL}/blob/deleteBatch`, {
+        data: { blobFileNames } // This matches your DeleteDataSourcesRequest DTO
+      });
+      return result.data;
+    } catch (err) {
+      console.error("Error deleting files:", err);
+      throw err;
+    }
+  },
+
+// Add the getFiles method as well
+  getFiles: async (dsId: number, pageable: { page: number; size: number }): Promise<GetPagedBlobMetadataResponse> => {
+    const params = {
+      dsId,
+      page: pageable.page,
+      size: pageable.size
+    };
+    const response = await axios.get(`${API_BASEURL}/blob/getFiles`, { params });
+    return response.data;
   }
 }
 
